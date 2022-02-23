@@ -1,6 +1,6 @@
 #! /bin/bash
 
-printf "suggested wrd\n"
+printf "Try starting with: RAISE, ROATE or SOARE\n"
 
 printf "Enter all grey characters as one string:\n"
 read GREY;
@@ -33,8 +33,9 @@ grep "$GREEN" temp.txt >> green.txt
 
 #	SOME IMPLEMENTATION OF:
 
-#awk '/c/ && /l/ && !/[c]l.c./' green.txt
-#		where [^] is from previous attempt
+#awk '/c/ && /l/ && /[^c][^l].[^c]./' green.txt
+
+#	where one of [^c] can be from previous attempt!
 
 
 #awk !/"${ARRAY[0]}"/ words5.txt | awk !/"${ARRAY[1]}"/
