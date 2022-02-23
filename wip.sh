@@ -31,7 +31,7 @@ done
 
 grep "$GREEN" temp.txt >> green.txt
 
-#	SOME IMPLEMENTATION OF:
+# for YELLOW some iplementation of:
 
 #awk '/c/ && /l/ && /[^c][^l].[^c]./' green.txt
 
