@@ -31,11 +31,16 @@ done
 
 grep "$GREEN" temp.txt >> green.txt
 
+
 # for YELLOW some iplementation of:
 
 #awk '/c/ && /l/ && /[^c][^l].[^c]./' green.txt
 
-#	where one of [^c] can be from previous attempt!
+#	where one of [^c] can be from previous attempt(s)
+
+# also REMOVE .txt after each cycle of guesses:
+
+#rm temp.txt && rm green.txt
 
 
 #awk !/"${ARRAY[0]}"/ words5.txt | awk !/"${ARRAY[1]}"/
