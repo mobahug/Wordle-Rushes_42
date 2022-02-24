@@ -97,10 +97,10 @@ do
 		if [ -s "uniq.txt" ]
 		then
 			GG=$(echo "$(( $RANDOM % $(awk 'END{print NR}' uniq.txt) + 1 ))")
-			printf "\x1B[35m Enter: $(awk NR==${GG} uniq.txt)\n"
+			printf "Enter: \x1B[35m $(awk NR==${GG} uniq.txt)\n"
 		else
 			GG=$(echo "$(( $RANDOM % $(awk 'END{print NR}' temp.txt) + 1 ))")
-			printf "\x1B[35m Enter: $(awk NR==${GG} temp.txt)\n"
+			printf "Enter: \x1B[35m $(awk NR==${GG} temp.txt)\n"
 		fi
 	fi
 	I=$((I + 1))
