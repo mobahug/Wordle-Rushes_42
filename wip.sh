@@ -12,7 +12,6 @@ while [[ I -lt 6 ]]
 do
 	if [[ I -ne 0 ]]
 	then
-		printf "checking\n"
 		while [[ "$ANSWER" != "yes" && "$ANSWER" != "no" ]]
 		do
 			printf "Do you want to continue (yes/no)?\n"
@@ -54,26 +53,25 @@ do
 	LENGTH=$(echo "$YELLOW" | awk '{print length}')
 
 	ARRAY=( `echo $YELLOW | grep -o . ` )
-
 	if [ "$YELLOW" != "....." ]
 	then
-		grep -v "$YELLOW" temp.txt >> check.txt
+		while [ $LENGTH -gt 0 ]
+		do
+			LENGTH=$((LENGTH - 1))
+			if [ ${ARRAY["$LENGTH"]} != "." ]
+			then
+				awk /"${ARRAY["$LENGTH"]}"/ temp.txt > check.txt
+				rm temp.txt
+				mv check.txt temp.txt
+			fi
+		done
+		
+		awk /.[^a]..[^e]/ temp.txt > check.txt
+		#printf "awk /[^"${ARRAY[0]}"][^"${ARRAY[1]}"][^"${ARRAY[2]}"][^"${ARRAY[3]}"][^"${ARRAY[4]}"]/ temp.txt > check.txt"
 		rm temp.txt
 		mv check.txt temp.txt
 	fi
-
-	while [[ $LENGTH -gt 0 && "$YELLOW" != "....." ]]
-	do
-		LENGTH=$((LENGTH - 1))
-		if [ ${ARRAY["$LENGTH"]} != "."  ]
-		then
-			awk /"${ARRAY["$LENGTH"]}"/ temp.txt > check.txt
-			rm temp.txt
-			mv check.txt temp.txt
-		fi
-	done
 	printf "CHOOSE FROM\n\n"
 	cat temp.txt
 	I=$((I + 1))
 done
-
