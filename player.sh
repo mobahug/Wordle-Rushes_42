@@ -22,7 +22,7 @@ do
 	then
 		while [[ "$ANSWER" != "yes" && "$ANSWER" != "no" ]]
 		do
-			printf "Do you want to continue (yes/no)?\n"
+			printf "\x1B[0m Do you want to continue (\x1B[32m yes \x1B[0m / \x1B[31m no \x1B[0m )?\n"
 			read ANSWER
 			if [ "$ANSWER" == "yes" ]
 			then
@@ -36,11 +36,11 @@ do
 			fi
 		done
 	fi
-	printf "Enter all grey characters as one string:\n"
+	printf "Enter all \x1B[7m grey \x1B[0m characters as one string:\n"
 	read GREY;
-	printf "Enter all green characters, in the correct order(eg ..c..):\n";
+	printf "Enter all \x1B[32m green \x1B[0m characters, in the correct order e.g.: (..c..):\n";
 	read GREEN;
-	printf "Enter all yellow characters, in the same structure as previous or 5 '.' (.....) if empty:\n";
+	printf "Enter all \x1B[33m yellow \x1B[0m characters, in the same structure as previous or 5 '.' (.....) if empty:\n";
 	read YELLOW;
 
 	ARRAY=( `echo $GREY | grep -o . ` )
@@ -94,11 +94,14 @@ do
 	if [[ I -gt -1 && I -lt 3 ]]
 	then
 		uniqlist
-		GG=$(echo "$(( $RANDOM % $(awk 'END{print NR}' uniq.txt) + 1 ))")
-		printf "Enter: $(awk NR==${GG} uniq.txt)\n"
-	else
-		GG=$(echo "$(( $RANDOM % $(awk 'END{print NR}' temp.txt) + 1 ))")
-		printf "Enter: $(awk NR==${GG} temp.txt)\n"
+		if [ -s "uniq.txt" ]
+		then
+			GG=$(echo "$(( $RANDOM % $(awk 'END{print NR}' uniq.txt) + 1 ))")
+			printf "\x1B[35m Enter: $(awk NR==${GG} uniq.txt)\n"
+		else
+			GG=$(echo "$(( $RANDOM % $(awk 'END{print NR}' temp.txt) + 1 ))")
+			printf "\x1B[35m Enter: $(awk NR==${GG} temp.txt)\n"
+		fi
 	fi
 	I=$((I + 1))
 done

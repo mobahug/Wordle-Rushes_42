@@ -2,7 +2,7 @@
 
 cat words5.txt > temp.txt
 
-printf "Try starting with: RAISE, ROATE or SOARE\n"
+printf "Try starting with: raise, roate or soare\n"
 
 declare -i LENGTH
 declare -i I=0
@@ -14,7 +14,7 @@ do
 	then
 		while [[ "$ANSWER" != "yes" && "$ANSWER" != "no" ]]
 		do
-			printf "Do you want to continue (yes/no)?\n"
+			printf "\x1B[0m Do you want to continue (\x1B[32m yes \x1B[0m / \x1B[31m no \x1B[0m )?\n"
 			read ANSWER
 			if [ "$ANSWER" == "yes" ]
 			then
@@ -27,11 +27,11 @@ do
 			fi
 		done
 	fi
-	printf "Enter all grey characters as one string:\n"
+	printf "Enter all \x1B[7m grey \x1B[0m characters as one string:\n"
 	read GREY;
-	printf "Enter all green characters, in the correct order(eg ..c..):\n";
+	printf "Enter all \x1B[32m green \x1B[0m characters, in the correct order e.g.: (..c..):\n";
 	read GREEN;
-	printf "Enter all yellow characters, in the same structure as previous or 5 '.' (.....) if empty:\n";
+	printf "Enter all \x1B[33m yellow \x1B[0m characters, in the same structure as previous or 5 '.' (.....) if empty:\n";
 	read YELLOW;
 
 	ARRAY=( `echo $GREY | grep -o . ` )
