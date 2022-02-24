@@ -1,6 +1,6 @@
 #! /bin/bash
 
-cat words5.txt > temp.txt
+cat words_short.txt > temp.txt
 
 printf "Try starting with: raise, roate or soare\n"
 

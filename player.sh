@@ -1,6 +1,6 @@
 #! /bin/bash
 
-cat words5.txt > temp.txt
+cat words_short.txt > temp.txt
 
 uniqlist()
 {
@@ -9,7 +9,7 @@ uniqlist()
 	rm temp_uniq.txt
 }
 
-printf "Try starting with: raise\n"
+printf "Try starting with: \x1B[35m raise \x1B[0m\n"
 
 declare -i LENGTH
 declare -i I=0
@@ -97,10 +97,16 @@ do
 		if [ -s "uniq.txt" ]
 		then
 			GG=$(echo "$(( $RANDOM % $(awk 'END{print NR}' uniq.txt) + 1 ))")
-			printf "Enter: \x1B[35m $(awk NR==${GG} uniq.txt)\n"
-		else
+			printf "Let's try: \x1B[35m $(awk NR==${GG} uniq.txt)\n"
+		elif [ -s "temp.txt" ]
+		then
 			GG=$(echo "$(( $RANDOM % $(awk 'END{print NR}' temp.txt) + 1 ))")
-			printf "Enter: \x1B[35m $(awk NR==${GG} temp.txt)\n"
+			printf "Hmm... What about: \x1B[35m $(awk NR==${GG} temp.txt)\n"
+		else
+			printf "No more guesses left. You might be using a sus version of Wordle.\n"
+			rm temp.txt
+			rm uniq.txt
+			exit
 		fi
 	fi
 	I=$((I + 1))
