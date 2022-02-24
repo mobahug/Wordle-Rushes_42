@@ -2,11 +2,19 @@
 
 cat words5.txt > temp.txt
 
-printf "Try starting with: RAISE, ROATE or SOARE\n"
+uniqlist()
+{
+	perl -F -lane 'print do { my %seen; grep { !$seen{$_}++ } @F }' temp.txt > temp_uniq.txt
+	grep -o -w '\w\{5,5\}' temp_uniq.txt > uniq.txt
+	rm temp_uniq.txt
+}
+
+printf "Try starting with: raise\n"
 
 declare -i LENGTH
 declare -i I=0
-
+declare -i BB
+declare -i GG
 
 while [[ I -lt 6 ]]
 do
@@ -22,6 +30,8 @@ do
 				break
 			elif [ "$ANSWER" == "no" ]
 			then
+				rm temp.txt
+				rm uniq.txt
 				exit
 			fi
 		done
@@ -81,7 +91,14 @@ do
 		rm temp.txt
 		mv check.txt temp.txt
 	fi
-	printf "CHOOSE FROM\n\n"
-	cat temp.txt
+	if [[ I -gt -1 && I -lt 3 ]]
+	then
+		uniqlist
+		GG=$(echo "$(( $RANDOM % $(awk 'END{print NR}' uniq.txt) + 1 ))")
+		printf "Enter: $(awk NR==${GG} uniq.txt)\n"
+	else
+		GG=$(echo "$(( $RANDOM % $(awk 'END{print NR}' temp.txt) + 1 ))")
+		printf "Enter: $(awk NR==${GG} temp.txt)\n"
+	fi
 	I=$((I + 1))
 done
