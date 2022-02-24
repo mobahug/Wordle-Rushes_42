@@ -32,7 +32,7 @@ do
 	read GREEN;
 	printf "Enter all yellow characters, in the same structure as previous or 5 '.' (.....) if empty:\n";
 	read YELLOW;
-	
+
 	ARRAY=( `echo $GREY | grep -o . ` )
 	LENGTH=$(echo "$GREY" | awk '{print length}')
 
@@ -65,9 +65,19 @@ do
 				mv check.txt temp.txt
 			fi
 		done
-		
-		awk /.[^a]..[^e]/ temp.txt > check.txt
-		#printf "awk /[^"${ARRAY[0]}"][^"${ARRAY[1]}"][^"${ARRAY[2]}"][^"${ARRAY[3]}"][^"${ARRAY[4]}"]/ temp.txt > check.txt"
+		LENGTH=0
+		STRING=""
+		while [[ $LENGTH -lt 5 ]]
+		do
+			if [ "${ARRAY[$LENGTH]}" != "." ]
+			then
+				STRING+="[^"${ARRAY[$LENGTH]}"]"
+			else
+				STRING+="."
+			fi
+			LENGTH=$((LENGTH + 1))
+		done
+		awk /"$STRING"/ temp.txt > check.txt
 		rm temp.txt
 		mv check.txt temp.txt
 	fi
