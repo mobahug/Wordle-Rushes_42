@@ -1,46 +1,79 @@
 #! /bin/bash
 
+cat words5.txt > temp.txt
+
 printf "Try starting with: RAISE, ROATE or SOARE\n"
 
-printf "Enter all grey characters as one string:\n"
-read GREY;
-printf "Enter all green characters, in the correct order(eg ..c..):\n";
-read GREEN;
-#printf "Enter all yellow characters, in the same structure as previous:\n";
-#read YELLOW;
+declare -i LENGTH
+declare -i I=0
 
-ARRAY=( `echo $GREY | grep -o . ` )
 
-declare -i LENGTH=$(echo "$GREY" | awk '{print length}')
-
-ADD=" | !/"${ARRAY[1]}"/"
-ARG="awk !/"${ARRAY[0]}"/ words5.txt"
-
-cat words5.txt >> temp.txt
-
-#awk !/"${ARRAY[0]}"/ words5.txt | awk !/"${ARRAY[1]}"/
-#$ARG
-while [ $LENGTH -gt 0 ]
+while [[ I -lt 6 ]]
 do
-    	LENGTH=$((LENGTH - 1))
-    	#printf "$LENGTH"
-    	awk !/"${ARRAY["$LENGTH"]}"/ temp.txt >> grey.txt
+	if [[ I -ne 0 ]]
+	then
+		printf "checking\n"
+		while [[ "$ANSWER" != "yes" && "$ANSWER" != "no" ]]
+		do
+			printf "Do you want to continue (yes/no)?\n"
+			read ANSWER
+			if [ "$ANSWER" == "yes" ]
+			then
+				ANSWER="-"
+				break
+			elif [ "$ANSWER" == "no" ]
+			then
+				exit
+			fi
+		done
+	fi
+	printf "Enter all grey characters as one string:\n"
+	read GREY;
+	printf "Enter all green characters, in the correct order(eg ..c..):\n";
+	read GREEN;
+	printf "Enter all yellow characters, in the same structure as previous or 5 '.' (.....) if empty:\n";
+	read YELLOW;
+	
+	ARRAY=( `echo $GREY | grep -o . ` )
+	LENGTH=$(echo "$GREY" | awk '{print length}')
+
+	while [ $LENGTH -gt 0 ]
+	do
+    		LENGTH=$((LENGTH - 1))
+    		awk !/"${ARRAY["$LENGTH"]}"/ temp.txt > check.txt
+		rm temp.txt
+		mv check.txt temp.txt
+	done
+
+
+	grep "$GREEN" temp.txt > check.txt
 	rm temp.txt
-	mv grey.txt temp.txt
+	mv check.txt temp.txt
+
+
+	LENGTH=$(echo "$YELLOW" | awk '{print length}')
+
+	ARRAY=( `echo $YELLOW | grep -o . ` )
+
+	if [ "$YELLOW" != "....." ]
+	then
+		grep -v "$YELLOW" temp.txt >> check.txt
+		rm temp.txt
+		mv check.txt temp.txt
+	fi
+
+	while [[ $LENGTH -gt 0 && "$YELLOW" != "....." ]]
+	do
+		LENGTH=$((LENGTH - 1))
+		if [ ${ARRAY["$LENGTH"]} != "."  ]
+		then
+			awk /"${ARRAY["$LENGTH"]}"/ temp.txt > check.txt
+			rm temp.txt
+			mv check.txt temp.txt
+		fi
+	done
+	printf "CHOOSE FROM\n\n"
+	cat temp.txt
+	I=$((I + 1))
 done
 
-grep "$GREEN" temp.txt >> green.txt
-
-
-# for YELLOW some iplementation of:
-
-#awk '/c/ && /l/ && /[^c][^l].[^c]./' green.txt
-
-#	where one of [^c] can be from previous attempt(s)
-
-# also REMOVE .txt after each cycle of guesses:
-
-#rm temp.txt && rm green.txt
-
-
-#awk !/"${ARRAY[0]}"/ words5.txt | awk !/"${ARRAY[1]}"/
