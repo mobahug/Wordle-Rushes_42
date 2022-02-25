@@ -9,7 +9,7 @@ uniqlist()
 	rm temp_uniq.txt
 }
 
-printf "Try starting with: \x1B[35m raise \x1B[0m\n"
+printf "My favorite starting word is:\x1B[35m raise \x1B[0m\n\n"
 
 declare -i LENGTH
 declare -i I=0
@@ -97,17 +97,30 @@ do
 		if [ -s "uniq.txt" ]
 		then
 			GG=$(echo "$(( $RANDOM % $(awk 'END{print NR}' uniq.txt) + 1 ))")
-			printf "Let's try: \x1B[35m $(awk NR==${GG} uniq.txt)\n"
+			printf "\nLet's try:\x1B[35m $(awk NR==${GG} uniq.txt)\n\n"
 		elif [ -s "temp.txt" ]
 		then
 			GG=$(echo "$(( $RANDOM % $(awk 'END{print NR}' temp.txt) + 1 ))")
-			printf "Hmm... What about: \x1B[35m $(awk NR==${GG} temp.txt)\n"
+			printf "\nHmm... What about:\x1B[35m $(awk NR==${GG} temp.txt)\n\n"
 		else
-			printf "No more guesses left. You might be using a sus version of Wordle.\n"
+			printf "\nNo more guesses left. You might be using a sus version of Wordle.\n"
 			rm temp.txt
 			rm uniq.txt
 			exit
 		fi
+	elif [[ I -lt 4 && "temp.txt" ]]
+	then
+		GG=$(echo "$(( $RANDOM % $(awk 'END{print NR}' temp.txt) + 1 ))")
+		printf "\nIt could be:\x1B[35m $(awk NR==${GG} temp.txt)\n\n"
+	elif [[ I -lt 5 && "temp.txt" ]]
+	then
+		GG=$(echo "$(( $RANDOM % $(awk 'END{print NR}' temp.txt) + 1 ))")
+		printf "\n༼つ◕ _◕ ༽つ\x1B[35m $(awk NR==${GG} temp.txt)\n\n"
+	else
+		printf "\nI'm wordless. You might be using a sus version of Wordle.\n"
+	#	rm temp.txt
+	#	rm uniq.txt
+		exit
 	fi
 	I=$((I + 1))
 done
