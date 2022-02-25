@@ -82,7 +82,17 @@ do
 		rm temp.txt
 		mv check.txt temp.txt
 	fi
-	printf "CHOOSE FROM\n\n"
-	cat temp.txt
+	if [ -s "temp.txt" ]
+	then
+		printf "CHOOSE FROM:\n\n"
+		cat temp.txt
+		printf "\nThe more unique characters the better!\n\n"
+	else
+		printf "\nI'm wordless - pun intended.\n"
+		printf "Check that you entered everything correctly\n"
+		printf "or that you're playing the standard version of Wordle.\n\n"
+		rm temp.txt
+		exit
+	fi
 	I=$((I + 1))
 done
