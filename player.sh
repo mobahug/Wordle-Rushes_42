@@ -91,7 +91,7 @@ do
 		rm temp.txt
 		mv check.txt temp.txt
 	fi
-	if [[ I -gt -1 && I -lt 3 ]]
+	if [[ I -gt -1 && I -lt 7 ]]
 	then
 		uniqlist
 		if [ -s "uniq.txt" ]
