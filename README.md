@@ -24,3 +24,33 @@ It worked out pretty well in the end, and we were able to solve task1 and task2.
 
 
 <img width="662" alt="Screenshot 2022-03-15 at 9 29 23" src="https://user-images.githubusercontent.com/83179142/158327842-d9fd3a36-a414-41c7-9f77-d1f8ca913e8c.png">
+
+
+### V.2 Player Part
+
+On the Player part we had to make an AI/player who would play the game.
+Here we used our script from the assistant part, but we added small modification which recommending the word which having the highest chance to be the correct one.
+We also saving the ```unique``` words to a text file to record the player. Unique words are which don't have double letter in them.
+So we filtering out a tons of informations in each attemp which leading to that user can already win on the 3rd attempt.
+
+
+<img width="655" alt="Screenshot 2022-03-15 at 9 36 02" src="https://user-images.githubusercontent.com/83179142/158328788-5387d330-f77d-40da-96e7-c611a494380f.png">
+
+## BUGS to Solve
+
+Beacuse of the high effiency of the player.sh file where we searching only unique words, we didn't have time to develope to check words with double letter.
+
+# Usage:
+
+After you cloned the repo:
+
+    bash assistant.sh
+    
+    bash player.sh
+    
+### Credit
+
+Thank you for the collaboration for:
+
+    jddavis23
+    reviisori
