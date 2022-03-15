@@ -48,6 +48,9 @@ After you cloned the repo:
     
     bash player.sh
     
+The rest will be shown on the terminal!
+
+    
 ### Credit
 
 Thank you for the collaboration for:
