@@ -53,7 +53,7 @@ The rest will be shown on the terminal!
     
 ### Credit
 
-Thank you for the collaboration for:
+Thank you for the collaboration:
 
     jddavis23
     reviisori
